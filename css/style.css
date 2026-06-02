@@ -356,24 +356,37 @@ color: #fff;
 	padding-left:15px;
 }
 
-.Portfolio-box img {
-  max-height: 230px;
-}
-
 .Portfolio-box{
-	text-align:center;
 	margin-bottom:30px;
 	height:400px;
 	width:350px;
 	overflow:hidden;
 	float:left;
 	padding:0;
+	display:flex;
+	flex-wrap:wrap;
+	align-items:flex-start;
+	align-content:flex-start;
 }
 .Portfolio-box img{
-	margin-bottom:25px;
+	width:48px;
+	height:48px;
+	object-fit:contain;
+	margin-right:12px;
+	margin-bottom:0;
+	flex-shrink:0;
 	transition:all 0.3s ease-in-out;
 	-moz-transition:all 0.3s ease-in-out;
 	-webkit-transition:all 0.3s ease-in-out;
+}
+.Portfolio-box h3{
+	flex:1;
+	margin:0;
+	align-self:center;
+}
+.Portfolio-box p{
+	width:100%;
+	margin-top:12px;
 }
 
 .Portfolio-box img:hover {
