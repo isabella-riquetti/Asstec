@@ -5,7 +5,7 @@ $(document).ready(function() {
     if(validForm == true) {
       ShowMessage("info", "Sua mensagem está sendo enviada. Favor aguardar alguns instantes...", "spinner fa-pulse");
       $.ajax({
-        url     : 'NOP',
+        url     : 'https://formspree.io/f/xlgkrelj',
         type    : 'post',
         dataType: 'json',
         data    : $(this).serialize(),
