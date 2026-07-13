@@ -35,7 +35,7 @@
 	.social-link{ margin:0;}
 
 	.main-nav{ display:block !important; }
-	.main-nav li a{ padding:8px 15px;}
+	.main-nav li a{ padding: 0;}
 	/*.portfolioContainer{ width:750px; margin:0px auto !important; }
 	.Portfolio-box{ height:250px;}*/
 
@@ -55,14 +55,14 @@
 	.header h1{ font-size:28px;}
 	.header{ padding:60px 0;}
 	.main-section{ padding:60px 0 70px;}
-	.main-nav{ display:none; position:absolute; left:0; width:100%; top:68px; margin:0 auto; float: none; background:#fff; z-index: 99; border-top: 1px solid #eee;}
+	.main-nav{ display:none; position:absolute; left:0; width:100%; top:38px; margin:0 auto; float: none; background:#fff; z-index: 99; border-top: 1px solid #eee;}
 	.main-nav li{ display:block;}
 	.main-nav li.small-logo{ display:none;}
 	.main-nav li a{ display:block; padding:12px 32px; margin: 4px 0; border-bottom: 1px solid #f3f3f3;;}
 	.main-nav li a:hover{color:#7cc576}
 	.team-leader-box{ max-width:307px; width:auto; float:none; margin:0 auto;	}
 	.team-leader-box:nth-of-type(3n){ margin:0 auto}
-	.res-nav_click{ display:block;}
+	.res-nav_click{ display:flex; margin: 0; align-items: center; height: 38px;}
 	.featured-work{ font-size:12px; margin-top:30px;}
 	.featured-box{ font-size:12px;}
 	.featured-box p{ line-height:18px; }

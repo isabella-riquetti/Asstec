@@ -163,7 +163,7 @@ p {
 }
 .main-nav {
     text-align: center;
-    margin: 10px 0 0;
+    margin: 0;
     padding: 0;
     list-style: none;
 }
@@ -763,11 +763,12 @@ img {
     font-style: normal;
     display: none;
     width: 42px;
-    height: 27px;
-    margin: 20px auto;
     transition: all 0.3s ease-in-out;
     -moz-transition: all 0.3s ease-in-out;
     -webkit-transition: all 0.3s ease-in-out;
+}
+.res-nav_click img {
+    height: 27px;
 }
 .res-nav_click:active,
 .res-nav_click:focus,
