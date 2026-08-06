@@ -1,8 +1,44 @@
+# Security headers apply everywhere. Cache-Control here is the safe default:
+# HTML (and anything not overridden below) must revalidate, so content and SEO
+# changes go live immediately instead of sitting stale in the CDN for a month.
 [[headers]]
   for = "/*"
   [headers.values]
-    Cache-Control = "public, max-age=2628000"
+    Cache-Control = "public, max-age=0, must-revalidate"
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# CSS and JS are served from stable, unfingerprinted paths (/css/main.css etc.),
+# so they inherit the revalidating default above on purpose -- a long max-age
+# would strand users on old assets after a deploy. Revalidation is a cheap 304.
+
+# Images change rarely and are safe to hold for a month.
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=2628000"
+
+# Fonts are immutable in practice.
+[[headers]]
+  for = "/webfonts/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000"
+
+# Icons and manifest: long enough to be cheap, short enough that a rebrand
+# propagates within a week.
+[[headers]]
+  for = "/*.png"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/favicon.*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/site.webmanifest"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
