@@ -93,10 +93,69 @@
     for (var i = 0; i < labels.length; i++) labels[i].textContent = status.label;
   }
 
+  // The reviews carousel only rotates on desktop, where three cards show at a
+  // time and wrap around. On phones the track is a native scroll-snap row, so
+  // the arrows and dots are hidden and --order is never applied.
+  var REVIEWS_VISIBLE = 3;
+
+  function initReviews() {
+    var root = document.getElementById("avaliacoes");
+    if (!root) return;
+    var items = root.querySelectorAll(".reviews__item");
+    var dots = root.querySelectorAll("[data-review-dot]");
+    var position = root.querySelector(".reviews__position");
+    var total = items.length;
+    if (!total) return;
+
+    var index = 0;
+    // With three or fewer reviews the desktop grid already shows all of them,
+    // so rotating would only shuffle the same cards. Controls hide themselves
+    // and turn back on by themselves once a fourth review is added.
+    var rotates = total > REVIEWS_VISIBLE;
+
+    root.classList.add("reviews--js");
+    if (!rotates) root.classList.add("reviews--static");
+
+    function render() {
+      if (!rotates) return;
+      for (var i = 0; i < total; i++) {
+        items[i].setAttribute("data-out", "");
+        items[i].style.removeProperty("--order");
+      }
+      for (var k = 0; k < REVIEWS_VISIBLE && k < total; k++) {
+        var item = items[(index + k) % total];
+        item.removeAttribute("data-out");
+        item.style.setProperty("--order", String(k));
+      }
+      for (var d = 0; d < dots.length; d++) {
+        dots[d].setAttribute("aria-current", String(d === index));
+      }
+      if (position) position.textContent = (index + 1) + " / " + total;
+    }
+
+    function go(next) {
+      index = ((next % total) + total) % total;
+      render();
+    }
+
+    var prev = root.querySelector('[data-review-nav="prev"]');
+    var next = root.querySelector('[data-review-nav="next"]');
+    if (prev) prev.addEventListener("click", function () { go(index - 1); });
+    if (next) next.addEventListener("click", function () { go(index + 1); });
+    for (var n = 0; n < dots.length; n++) {
+      dots[n].addEventListener("click", function () {
+        go(parseInt(this.getAttribute("data-review-dot"), 10));
+      });
+    }
+
+    render();
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     initChips();
     initFields();
     refreshQuote();
     refreshHours();
+    initReviews();
   });
 })();

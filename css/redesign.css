@@ -142,6 +142,9 @@ section[id] { scroll-margin-top: 84px; }
 .hero h1 { font-size: clamp(38px, 5.4vw, 70px); line-height: 0.98; margin-top: 14px; }
 .hero__lead { font-size: clamp(15.5px, 1.6vw, 18px); line-height: 1.5; margin-top: 20px; max-width: 46ch; color: #d8dee6; }
 .hero__actions { display: flex; gap: 10px; margin-top: 26px; flex-wrap: wrap; }
+.hero__rating { display: inline-flex; align-items: center; gap: 9px; margin-top: 16px; color: #d8dee6; font-size: 13px; text-decoration: none; }
+.hero__rating:hover { color: #fff; }
+.hero__rating strong { font-weight: 600; }
 .hero__stats { display: flex; column-gap: clamp(18px, 3vw, 28px); margin-top: 30px; border-top: 1px solid rgba(242, 242, 243, 0.22); padding-top: 18px; flex-wrap: wrap; }
 .hero__stats-label { width: 100%; font-size: 14px; color: #c3ccd6; font-weight: 500; margin-bottom: 4px; }
 .stat__value { font-family: var(--font-heading); font-weight: 600; font-size: 30px; line-height: 1; }
@@ -178,6 +181,69 @@ section[id] { scroll-margin-top: 84px; }
 .service-card__list li { display: flex; gap: 10px; align-items: baseline; font-size: 13.5px; }
 .service-card__list li::before { content: "—"; color: var(--color-accent); font-size: 11px; }
 .service-card .btn { margin-top: 8px; align-self: flex-start; }
+
+/* — avaliações — */
+.reviews__grid { display: grid; grid-template-columns: 0.66fr 2fr; gap: 36px; align-items: start; }
+/* Grid items default to min-width:auto, so a long review line would push the
+   column past the viewport instead of wrapping. */
+.reviews__grid > * { min-width: 0; }
+.reviews__score { background: var(--color-accent-100); padding: 24px; }
+.reviews__score-label { font-size: 10px; letter-spacing: .11em; color: var(--color-accent-700); }
+.reviews__score-value { display: flex; align-items: flex-end; gap: 8px; margin-top: 12px; }
+.reviews__score-number { font-family: var(--font-heading); font-weight: 600; font-size: 64px; line-height: .85; }
+.reviews__score-of { font-size: 14px; color: var(--color-accent-800); padding-bottom: 9px; }
+.reviews__score-stars { margin-top: 8px; }
+/* Partial stars: an empty row with a clipped filled row on top, width set from
+   --pct, so 4,7 renders as four and a bit rather than being rounded up to five. */
+.stars { --gap: .14em; position: relative; display: inline-block; white-space: nowrap; letter-spacing: var(--gap); line-height: 1; }
+/* Drop the trailing letter-space so --pct maps onto the glyphs alone. */
+.stars__empty { margin-right: calc(-1 * var(--gap)); }
+.stars__empty { color: color-mix(in srgb, var(--color-accent) 30%, transparent); }
+.stars__fill { position: absolute; top: 0; left: 0; width: var(--pct, 100%); overflow: hidden; color: var(--color-accent); }
+.reviews__score-stars .stars { font-size: 20px; }
+.hero__rating .stars { --gap: .12em; font-size: 15px; }
+.hero__rating .stars__empty { color: rgba(242, 242, 243, .3); }
+.hero__rating .stars__fill { color: var(--color-accent-300); }
+.reviews__score-note { font-size: 13px; line-height: 1.45; margin-top: 10px; color: var(--color-accent-800); }
+.reviews__score .btn { margin-top: 18px; }
+.reviews__score-link { display: inline-block; margin-top: 12px; font-size: 11px; letter-spacing: .08em; }
+
+.reviews__head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.reviews__head h2 { font-size: clamp(24px, 3.2vw, 34px); }
+.reviews__nav { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.reviews__position { font-size: 11px; }
+.reviews__arrow {
+  width: 38px; height: 38px; flex: none; display: flex; align-items: center; justify-content: center;
+  background: transparent; border: 1px solid var(--color-divider); color: var(--color-accent-800);
+  font-family: inherit; font-size: 15px; line-height: 1; cursor: pointer;
+}
+.reviews__arrow:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+.reviews__track { list-style: none; margin: 22px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.reviews__item { display: flex; }
+.review-card { flex: 1; background: var(--color-surface); padding: 22px 20px; display: flex; flex-direction: column; gap: 12px; min-height: 172px; }
+.review-card__top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.review-card__stars { font-size: 15px; letter-spacing: .12em; color: var(--color-accent); }
+.review-card__source { font-size: 10px; letter-spacing: .09em; color: var(--color-accent-700); }
+.review-card__when { font-size: 10px; letter-spacing: .08em; }
+.review-card__text { font-size: 14.5px; line-height: 1.5; flex: 1; text-wrap: pretty; }
+.review-card__author { border-top: 1px solid var(--color-divider); padding-top: 12px; }
+.review-card__name { font-family: var(--font-heading); font-weight: 600; font-size: 16px; line-height: 1.15; }
+.review-card__tag { font-size: 10px; letter-spacing: .09em; color: var(--color-accent-700); margin-top: 3px; }
+
+.reviews__dots { display: flex; gap: 6px; margin-top: 18px; }
+.reviews__dot { width: 7px; height: 7px; padding: 0; border: 0; cursor: pointer; background: color-mix(in srgb, var(--color-text) 22%, transparent); }
+.reviews__dot[aria-current="true"] { background: var(--color-accent); }
+.reviews__hint { display: none; }
+/* Every review already fits on screen: the arrows and dots would be inert. */
+.reviews--static .reviews__nav, .reviews--static .reviews__dots { display: none; }
+
+/* Desktop rotates three cards at a time; --order keeps the wrap-around visually
+   in sequence without touching the DOM, so the mobile scroll order stays intact. */
+@media (min-width: 781px) {
+  .reviews--js .reviews__item { order: var(--order, 0); }
+  .reviews--js .reviews__item[data-out] { display: none; }
+}
 
 /* — quote builder — */
 .quote { padding: 30px clamp(20px, 4vw, 30px); }
@@ -287,6 +353,34 @@ textarea.input { min-height: 74px; resize: vertical; }
   .mural__tile { height: 58px; }
 
   .services-grid { grid-template-columns: 1fr; }
+
+  .hero__rating { font-size: 12.5px; min-height: 44px; }
+
+  .reviews__grid { grid-template-columns: 1fr; gap: 16px; }
+  .reviews__score { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 14px; padding: 16px; background: var(--color-surface); }
+  .reviews__score-label { width: 100%; margin-bottom: 4px; }
+  .reviews__score-value { margin-top: 0; }
+  .reviews__score-number { font-size: 44px; }
+  .reviews__score-of { display: none; }
+  .reviews__score-stars { margin-top: 0; }
+  .reviews__score-stars .stars { font-size: 16px; }
+  .reviews__score-meta { flex: 1; min-width: 0; }
+  .reviews__score-note { margin-top: 4px; font-size: 12px; }
+  .reviews__score .btn { margin-top: 12px; }
+  .reviews__score-link { width: 100%; margin-top: 10px; min-height: 44px; display: flex; align-items: center; }
+
+  .reviews__track {
+    display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory;
+    margin-top: 12px;
+    margin-inline: calc(-1 * clamp(20px, 4vw, 40px));
+    padding: 0 clamp(20px, 4vw, 40px) 4px;
+  }
+  .reviews__item { flex: 0 0 82%; scroll-snap-align: start; }
+  .review-card { min-height: 0; padding: 15px; gap: 9px; }
+  .review-card__text { font-size: 13px; }
+  .review-card__name { font-size: 14.5px; }
+  .reviews__nav, .reviews__dots { display: none; }
+  .reviews__hint { display: block; font-size: 9.5px; letter-spacing: .08em; margin-top: 6px; }
 
   .quote { padding: 22px 18px; }
   .quote__grid { grid-template-columns: 1fr; gap: 24px; }
