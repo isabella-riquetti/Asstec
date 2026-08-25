@@ -16,13 +16,12 @@
 # Content-Security-Policy notes, directive by directive:
 #   default-src 'self'    everything not listed below may only come from
 #                         comifer.com.br.
-#   script-src            the two sha256 values are the two inline <script>
-#                         blocks in index.html: the gtag config and the
-#                         reveal-on-scroll flag in the <head>. EDITING EITHER
-#                         BLOCK -- even the indentation -- INVALIDATES ITS HASH
-#                         AND THE BROWSER SILENTLY STOPS RUNNING IT. Recompute
-#                         with `node tools/csp-hashes.mjs` and paste the output
-#                         here. googletagmanager.com serves gtag.js.
+#   script-src            the single sha256 value is the one inline <script>
+#                         block left in index.html: the reveal-on-scroll flag
+#                         in the <head>. EDITING THAT BLOCK -- even the
+#                         indentation -- INVALIDATES THE HASH AND THE BROWSER
+#                         SILENTLY STOPS RUNNING IT. Recompute with
+#                         `node tools/csp-hashes.mjs` and paste the output here.
 #                         No 'unsafe-inline' and no 'unsafe-eval': injected
 #                         <script> tags simply do not execute, which is the
 #                         whole point of the header.
@@ -34,7 +33,8 @@
 #                         element.style in JS (anime.js, js/redesign.js) is
 #                         CSSOM, not an inline style, and keeps working.
 #   font-src              fonts.gstatic.com serves the Barlow files.
-#   img/connect-src       where GA4 sends its hits.
+#   img/connect-src       'self' only. Analytics was removed from the site,
+#                         so nothing beacons out to a third party any more.
 #   frame-ancestors       same rule as X-Frame-Options below, for browsers
 #                         that honour CSP instead of the legacy header.
 #   base-uri/object-src   kill <base href> hijacking and plugin embeds.
@@ -50,7 +50,7 @@
   for = "/*"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
-    Content-Security-Policy = "default-src 'self'; base-uri 'none'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'sha256-HyxMnL08XaeCfgD1kiOiRo+ypAz79tSQ2TphLhTZcFo=' 'sha256-S+K5BE3Dsfz7jf/b26IZB6NMiiIeLgdeQ/snsZLFhTw=' https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://www.googletagmanager.com https://*.google-analytics.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com"
+    Content-Security-Policy = "default-src 'self'; base-uri 'none'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'sha256-S+K5BE3Dsfz7jf/b26IZB6NMiiIeLgdeQ/snsZLFhTw='; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self'; connect-src 'self'"
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     # Legacy header for the browsers that still ship the XSS auditor. Chrome,
