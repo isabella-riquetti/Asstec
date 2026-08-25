@@ -62,6 +62,9 @@ a:hover { color: var(--color-accent-800); }
   text-transform: uppercase;
 }
 .text-muted { color: color-mix(in srgb, var(--color-text) 58%, transparent); }
+/* Kickers and captions that sit a step below body copy. A class, not a
+   style="" attribute: the CSP in netlify.toml disallows inline styles. */
+.mono--xs { font-size: 11px; }
 .on-dark { color: #f2f2f3; }
 .on-dark .text-muted { color: #c3ccd6; }
 
@@ -200,6 +203,8 @@ section[id] { scroll-margin-top: 84px; }
 .stars__empty { margin-right: calc(-1 * var(--gap)); }
 .stars__empty { color: color-mix(in srgb, var(--color-accent) 30%, transparent); }
 .stars__fill { position: absolute; top: 0; left: 0; width: var(--pct, 100%); overflow: hidden; color: var(--color-accent); }
+/* 4,7 of 5 fills 94% of the row. Same reason as .mono--xs: no inline styles. */
+.stars--47 { --pct: 94%; }
 .reviews__score-stars .stars { font-size: 20px; }
 .hero__rating .stars { --gap: .12em; font-size: 15px; }
 .hero__rating .stars__empty { color: rgba(242, 242, 243, .3); }
@@ -402,4 +407,21 @@ textarea.input { min-height: 74px; resize: vertical; }
 
   .site-footer { padding-bottom: 90px; }
   .sticky-cta { display: grid; }
+}
+
+/* --------------------------------------------------------------------------
+   REVEAL ON SCROLL
+   Os blocos entram subindo alguns pixels enquanto surgem. O estado inicial
+   (invisível e deslocado para baixo) só vale sob .js-reveal, ligada pelo
+   snippet no <head> — e apenas quando o visitante não pediu menos movimento.
+   O js/redesign.js desliga a classe se o anime.js não tiver carregado. Em
+   qualquer um desses casos a página aparece normalmente, sem animação: o
+   conteúdo nunca depende do JS para ficar visível.
+
+   O deslocamento abaixo é o mesmo REVEAL_SHIFT do js/redesign.js — se mudar
+   um, mude o outro, senão o bloco salta no primeiro quadro da animação.
+   -------------------------------------------------------------------------- */
+.js-reveal [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
 }

@@ -151,11 +151,122 @@
     render();
   }
 
+  // O conteúdo entra subindo quando cruza a dobra. O estado inicial vive no
+  // CSS, sob .js-reveal — a classe que o snippet do <head> liga só quando há
+  // JS e o visitante não pediu menos movimento. Aqui a classe é desligada se
+  // o anime.js não tiver chegado, porque um bloco parado e invisível é pior
+  // do que um bloco sem animação.
+  var REVEAL_SHIFT = 24;    // px que o bloco sobe — igual ao translateY do CSS
+  var REVEAL_STAGGER = 70;  // ms entre blocos que entram na mesma passada
+  var REVEAL_CASCADE_MAX = 420; // teto, em ms, para a cascata de um lote
+  var REVEAL_MARGIN = 15;   // % da viewport que o bloco precisa subir p/ animar
+
+  function playReveal(batch) {
+    // Um lote grande (a grade de marcas inteira, por exemplo) com 70ms por item
+    // arrastaria a cascata por mais de um segundo, tempo suficiente para o
+    // visitante rolar para longe e perder metade dela. Acima de meia duzia de
+    // blocos o passo encolhe para caber no teto abaixo.
+    var step = batch.length > 6
+      ? Math.max(20, Math.round(REVEAL_CASCADE_MAX / batch.length))
+      : REVEAL_STAGGER;
+
+    anime({
+      targets: batch,
+      translateY: [REVEAL_SHIFT, 0],
+      opacity: [0, 1],
+      duration: 620,
+      delay: anime.stagger(step),
+      easing: "easeOutCubic",
+      complete: function () {
+        // Solta os elementos ao terminar: sem o atributo a regra de .js-reveal
+        // deixa de valer, e sem o estilo inline que o anime deixou eles voltam
+        // ao estado natural do CSS (hover, media queries e afins intactos).
+        for (var i = 0; i < batch.length; i++) {
+          batch[i].removeAttribute("data-reveal");
+          batch[i].style.removeProperty("opacity");
+          batch[i].style.removeProperty("transform");
+        }
+      }
+    });
+  }
+
+  function initReveal() {
+    var root = document.documentElement;
+    if (!root.classList.contains("js-reveal")) return;
+
+    if (!window.anime || !("IntersectionObserver" in window)) {
+      root.classList.remove("js-reveal");
+      return;
+    }
+
+    var all = document.querySelectorAll("[data-reveal]");
+    var hero = [];
+    var rest = [];
+    for (var i = 0; i < all.length; i++) {
+      (all[i].closest(".hero") ? hero : rest).push(all[i]);
+    }
+
+    // O herói já está na tela quando a página abre: anima de saída, sem
+    // esperar rolagem que talvez nunca venha.
+    if (hero.length) playReveal(hero);
+
+    // Fila do que ainda não apareceu, para a rede de segurança lá embaixo.
+    var pendentes = rest.slice();
+
+    function reveal(batch) {
+      for (var b = 0; b < batch.length; b++) {
+        observer.unobserve(batch[b]);
+        var pos = pendentes.indexOf(batch[b]);
+        if (pos !== -1) pendentes.splice(pos, 1);
+      }
+      playReveal(batch);
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      // Tudo que cruza a linha na mesma passada do observer entra junto, em
+      // cascata — é isso que faz uma linha de cards subir um atrás do outro
+      // em vez de todos de uma vez.
+      var batch = [];
+      for (var e = 0; e < entries.length; e++) {
+        if (entries[e].isIntersecting) batch.push(entries[e].target);
+      }
+      if (batch.length) reveal(batch);
+    }, {
+      // A margem negativa encurta a viewport por baixo: o bloco só anima depois
+      // de subir um quarto da tela, senão ele já chega revelado na borda e o
+      // movimento passa despercebido. O preço é a faixa morta que ela cria na
+      // base -- ver revelarAtrasados() logo abaixo.
+      rootMargin: "0px 0px -" + REVEAL_MARGIN + "% 0px",
+      threshold: 0
+    });
+
+    // O que fica dentro daquela faixa morta quando a página chega ao fim nunca
+    // cruzaria o observer: não há mais rolagem para empurrá-lo para cima. Era o
+    // caso do rodapé, que ficava invisível para sempre. Ao tocar o fim da
+    // página, o que sobrou aparece de uma vez.
+    function revelarAtrasados() {
+      if (!pendentes.length) return;
+      var vista = window.innerHeight + (window.pageYOffset || document.documentElement.scrollTop);
+      if (vista < document.documentElement.scrollHeight - 2) return;
+      reveal(pendentes.slice());
+    }
+
+    window.addEventListener("scroll", revelarAtrasados, { passive: true });
+    window.addEventListener("resize", revelarAtrasados);
+
+    for (var r = 0; r < rest.length; r++) observer.observe(rest[r]);
+
+    // A página pode abrir já no fim (link com #ancora, rolagem restaurada pelo
+    // navegador), e aí o evento de scroll nunca vem.
+    revelarAtrasados();
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     initChips();
     initFields();
     refreshQuote();
     refreshHours();
     initReviews();
+    initReveal();
   });
 })();

@@ -310,6 +310,17 @@
     rel="stylesheet">
 
   <link rel="stylesheet" type="text/css" href="css/redesign.css">
+
+  <!-- Liga o estado inicial do reveal-on-scroll (ver .js-reveal no
+       css/redesign.css). Inline e no <head> de proposito: se dependesse do
+       js/redesign.js, que e deferido, o conteudo ja teria sido pintado e o
+       primeiro quadro da animacao apareceria como um piscar. Quem pediu menos
+       movimento no sistema nunca recebe a classe, e sem ela nada se esconde. -->
+  <script>
+    if (!window.matchMedia || !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.documentElement.className += " js-reveal";
+    }
+  </script>
 </head>
 
 <body>
@@ -344,21 +355,21 @@
     <section class="hero band-dark">
       <div class="wrap hero__inner">
         <div>
-          <p class="hero__kicker mono">COMIFER (ASSTEC) · Venda de peças · Assistência técnica · Belo Horizonte · desde
+          <p class="hero__kicker mono" data-reveal>COMIFER (ASSTEC) · Venda de peças · Assistência técnica · Belo Horizonte · desde
             2010</p>
-          <h1>Sua ferramenta pneumática volta a trabalhar.</h1>
-          <p class="hero__lead">A COMIFER é oficina autorizada para manutenção de ferramentas pneumáticas desde 2010.
+          <h1 data-reveal>Sua ferramenta pneumática volta a trabalhar.</h1>
+          <p class="hero__lead" data-reveal>A COMIFER é oficina autorizada para manutenção de ferramentas pneumáticas desde 2010.
             Reparo com peças originais, revisão preventiva e reposição de componentes para mais de 15 marcas.</p>
-          <div class="hero__actions">
+          <div class="hero__actions" data-reveal>
             <a class="btn btn-primary" href="#orcamento">Pedir orçamento</a>
             <a class="btn btn-secondary" href="tel:+5531984171256">Ligar para a oficina</a>
           </div>
-          <a class="hero__rating" href="#avaliacoes">
-            <span class="stars" style="--pct:94%" role="img" aria-label="4,7 de 5 estrelas"><span class="stars__empty"
+          <a class="hero__rating" href="#avaliacoes" data-reveal>
+            <span class="stars stars--47" role="img" aria-label="4,7 de 5 estrelas"><span class="stars__empty"
                 aria-hidden="true">★★★★★</span><span class="stars__fill" aria-hidden="true">★★★★★</span></span>
             <span><strong>4,7</strong> · 3 avaliações no Google</span>
           </a>
-          <div class="hero__stats">
+          <div class="hero__stats" data-reveal>
             <p class="hero__stats-label">COMIFER - Comercial Mineira de Ferramentas LTDA (ASSTEC)</p>
             <div>
               <div class="stat__value">16 anos</div>
@@ -375,8 +386,8 @@
           </div>
         </div>
         <div>
-          <p class="mural__label mono">Assistência técnica autorizada de</p>
-          <div class="mural__grid">
+          <p class="mural__label mono" data-reveal>Assistência técnica autorizada de</p>
+          <div class="mural__grid" data-reveal>
             <div class="blueprint mural__tile"><i class="corner tl"></i><i class="corner tr"></i><i
                 class="corner bl"></i><i class="corner br"></i><img src="img/Partner Logo/puma.png" width="280"
                 height="100" alt="Logo da Puma Air Center"></div>
@@ -418,21 +429,21 @@
                 height="90" alt="Logo da Ultra / Airfix"></div>
             <div class="mural__more"><span>E outras<br>marcas</span></div>
           </div>
-          <a href="#marcas" class="mural__link mono">Ver serviços e peças por marca →</a>
+          <a href="#marcas" class="mural__link mono" data-reveal>Ver serviços e peças por marca →</a>
         </div>
       </div>
     </section>
 
     <section class="section band-surface" id="servicos">
       <div class="wrap">
-        <div class="section-head">
+        <div class="section-head" data-reveal>
           <h2>Serviços</h2>
-          <div class="mono text-muted" style="font-size:11px">Duas frentes, mesmo peso</div>
+          <div class="mono mono--xs text-muted">Duas frentes, mesmo peso</div>
         </div>
-        <p class="section-lede text-muted">A COMIFER é assistência técnica autorizada em ferramentas pneumáticas e
+        <p class="section-lede text-muted" data-reveal>A COMIFER é assistência técnica autorizada em ferramentas pneumáticas e
           pistolas de pintura: diagnóstico, manutenção, reparo com peças originais e reposição de componentes.</p>
         <div class="services-grid">
-          <div class="blueprint service-card">
+          <div class="blueprint service-card" data-reveal>
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div class="service-card__kicker mono">Assistência autorizada</div>
             <h3 class="service-card__title">Manutenção e reparo</h3>
@@ -446,7 +457,7 @@
             </ul>
             <a class="btn btn-secondary" href="#orcamento">Enviar ferramenta para avaliação</a>
           </div>
-          <div class="blueprint service-card">
+          <div class="blueprint service-card" data-reveal>
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div class="service-card__kicker mono">Peças originais</div>
             <h3 class="service-card__title">Venda de peças</h3>
@@ -484,7 +495,7 @@
       <div class="wrap">
         <div class="reviews__grid">
 
-          <div class="blueprint reviews__score">
+          <div class="blueprint reviews__score" data-reveal>
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <p class="reviews__score-label mono">Avaliações no Google</p>
             <div class="reviews__score-value">
@@ -492,7 +503,7 @@
               <span class="reviews__score-of">de 5</span>
             </div>
             <div class="reviews__score-meta">
-              <p class="reviews__score-stars"><span class="stars" style="--pct:94%" role="img"
+              <p class="reviews__score-stars"><span class="stars stars--47" role="img"
                   aria-label="4,7 de 5 estrelas"><span class="stars__empty" aria-hidden="true">★★★★★</span><span
                     class="stars__fill" aria-hidden="true">★★★★★</span></span></p>
             </div>
@@ -503,9 +514,9 @@
           </div>
 
           <div>
-            <div class="reviews__head">
+            <div class="reviews__head" data-reveal>
               <h2>Quem já mandou ferramenta para a COMIFER</h2>
-              <div class="mono text-muted" style="font-size:11px">Avaliações verificadas</div>
+              <div class="mono mono--xs text-muted">Avaliações verificadas</div>
               <div class="reviews__nav">
                 <span class="reviews__position mono text-muted" aria-live="polite">1 / 5</span>
                 <button type="button" class="reviews__arrow" data-review-nav="prev"
@@ -515,7 +526,7 @@
               </div>
             </div>
 
-            <ul class="reviews__track">
+            <ul class="reviews__track" data-reveal>
               <li class="reviews__item">
                 <div class="blueprint review-card">
                   <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
@@ -578,7 +589,7 @@
 
     <section class="section band-dark" id="orcamento">
       <div class="wrap">
-        <div class="blueprint quote">
+        <div class="blueprint quote" data-reveal>
           <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
           <div class="quote__grid">
             <div>
@@ -672,17 +683,17 @@ Problema: (a avaliar)</pre>
 
     <section class="section band-surface" id="marcas">
       <div class="wrap">
-        <div class="section-head">
+        <div class="section-head" data-reveal>
           <h2>Marcas com assistência autorizada</h2>
-          <div class="mono text-muted" style="font-size:11px">15+ fabricantes</div>
+          <div class="mono mono--xs text-muted">15+ fabricantes</div>
         </div>
-        <p class="section-lede text-muted">A COMIFER é assistência técnica autorizada das marcas abaixo — manutenção,
+        <p class="section-lede text-muted" data-reveal>A COMIFER é assistência técnica autorizada das marcas abaixo — manutenção,
           reparo
           e peças originais para ferramentas pneumáticas.<br /> Não encontrou a sua? Consulte via WhatsApp ou telefone,
           atendemos outros fabricantes sob avaliação.</p>
         <div class="brands-grid">
 
-          <div class="blueprint brand-card">
+          <div class="blueprint brand-card" data-reveal>
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div class="brand-card__logo"><img src="img/Partner Logo/puma.png" width="280" height="100"
                 alt="Logo Puma Air Center" loading="lazy"></div>
@@ -696,7 +707,7 @@ Problema: (a avaliar)</pre>
                 rel="noopener">Produtos</a></div>
           </div>
 
-          <div class="blueprint brand-card">
+          <div class="blueprint brand-card" data-reveal>
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div class="brand-card__logo"><img src="img/Partner Logo/ir.png" width="338" height="81"
                 alt="Logo Ingersoll Rand" loading="lazy"></div>
@@ -710,7 +721,7 @@ Problema: (a avaliar)</pre>
                 rel="noopener">Produtos</a></div>
           </div>
 
-          <div class="blueprint brand-card">
+          <div class="blueprint brand-card" data-reveal>
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div class="brand-card__logo"><img src="img/Partner Logo/chicago.png" width="361" height="100"
                 alt="Logo Chicago Pneumatic" loading="lazy"></div>
@@ -724,7 +735,7 @@ Problema: (a avaliar)</pre>
                 rel="noopener">Produtos</a></div>
           </div>
 
-          <div class="blueprint brand-card">
+          <div class="blueprint brand-card" data-reveal>
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div class="brand-card__logo"><img src="img/Partner Logo/dynabrade.png" width="453" height="100"
                 alt="Logo Dynabrade" loading="lazy"></div>
@@ -737,7 +748,7 @@ Problema: (a avaliar)</pre>
                 rel="noopener">Produtos</a></div>
           </div>
 
-          <div class="blueprint brand-card">
+          <div class="blueprint brand-card" data-reveal>
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div class="brand-card__logo"><img src="img/Partner Logo/sigma.png" width="434" height="100"
                 alt="Logo Sigma Tools" loading="lazy"></div>
@@ -751,7 +762,7 @@ Problema: (a avaliar)</pre>
                 rel="noopener">Produtos</a></div>
           </div>
 
-          <div class="blueprint brand-card">
+          <div class="blueprint brand-card" data-reveal>
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div class="brand-card__logo"><img src="img/Partner Logo/vonder.png" width="180" height="57"
                 alt="Logo Vonder" loading="lazy"></div>
@@ -764,7 +775,7 @@ Problema: (a avaliar)</pre>
                 rel="noopener">Produtos</a></div>
           </div>
 
-          <div class="blueprint brand-card">
+          <div class="blueprint brand-card" data-reveal>
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div class="brand-card__logo"><img src="img/Partner Logo/gison.png" width="360" height="167"
                 alt="Logo Gison" loading="lazy"></div>
@@ -777,7 +788,7 @@ Problema: (a avaliar)</pre>
                 rel="noopener">Produtos</a></div>
           </div>
 
-          <div class="blueprint brand-card">
+          <div class="blueprint brand-card" data-reveal>
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div class="brand-card__logo"><img src="img/Partner Logo/stanley.png" width="1233" height="350"
                 alt="Logo Stanley Assembly Technologies" loading="lazy"></div>
@@ -791,7 +802,7 @@ Problema: (a avaliar)</pre>
                 rel="noopener">Produtos</a></div>
           </div>
 
-          <div class="blueprint brand-card">
+          <div class="blueprint brand-card" data-reveal>
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div class="brand-card__logo"><img src="img/Partner Logo/chiaperini.webp" width="400" height="92"
                 alt="Logo Chiaperini" loading="lazy"></div>
@@ -804,7 +815,7 @@ Problema: (a avaliar)</pre>
                 target="_blank" rel="noopener">Produtos</a></div>
           </div>
 
-          <div class="blueprint brand-card">
+          <div class="blueprint brand-card" data-reveal>
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div class="brand-card__logo"><img src="img/Partner Logo/bremem.png" width="780" height="253"
                 alt="Logo Bremem" loading="lazy"></div>
@@ -817,7 +828,7 @@ Problema: (a avaliar)</pre>
                 rel="noopener">Produtos</a></div>
           </div>
 
-          <div class="blueprint brand-card">
+          <div class="blueprint brand-card" data-reveal>
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div class="brand-card__logo"><img src="img/Partner Logo/pacar.png" width="646" height="258"
                 alt="Logo Pacar" loading="lazy"></div>
@@ -830,7 +841,7 @@ Problema: (a avaliar)</pre>
                 rel="noopener">Produtos</a></div>
           </div>
 
-          <div class="blueprint brand-card">
+          <div class="blueprint brand-card" data-reveal>
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div class="brand-card__logo"><img src="img/Partner Logo/imeco.png" width="385" height="87" alt="Logo Imeco"
                 loading="lazy"></div>
@@ -843,7 +854,7 @@ Problema: (a avaliar)</pre>
                 rel="noopener">Produtos</a></div>
           </div>
 
-          <div class="blueprint brand-card">
+          <div class="blueprint brand-card" data-reveal>
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div class="brand-card__logo"><img src="img/Partner Logo/airfix.png" width="306" height="90"
                 alt="Logo Ultra / Airfix" loading="lazy"></div>
@@ -859,7 +870,7 @@ Problema: (a avaliar)</pre>
                 rel="noopener">Produtos</a></div>
           </div>
 
-          <div class="blueprint brand-card">
+          <div class="blueprint brand-card" data-reveal>
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div class="brand-card__logo"><img src="img/Partner Logo/carlisle.png" width="333" height="112"
                 alt="Logo DeVilbiss" loading="lazy"></div>
@@ -883,12 +894,12 @@ Problema: (a avaliar)</pre>
     </section>
     <section class="section band-light" id="sobre">
       <div class="wrap">
-        <div class="section-head">
+        <div class="section-head" data-reveal>
           <h2>Sobre a COMIFER</h2>
-          <div class="mono text-muted" style="font-size:11px">ASSTEC · Belo Horizonte/MG</div>
+          <div class="mono mono--xs text-muted">ASSTEC · Belo Horizonte/MG</div>
         </div>
         <div class="about__grid">
-          <div class="about__text">
+          <div class="about__text" data-reveal>
             <p>A <strong>COMIFER — Comercial Mineira de Ferramentas LTDA</strong>, previamente conhecida como
               <strong>ASSTEC</strong>, é uma assistência técnica de ferramentas pneumáticas fundada em 2010 em Belo
               Horizonte e gerenciada desde a origem pelo Sr. Fabio Emídio. A oficina fica no bairro Ermelinda, na região
@@ -902,7 +913,7 @@ Problema: (a avaliar)</pre>
               produção e usuários individuais em Belo Horizonte, Contagem, Betim, Nova Lima e demais cidades da Região
               Metropolitana.</p>
           </div>
-          <div class="blueprint about__panel">
+          <div class="blueprint about__panel" data-reveal>
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div class="about__panel-label mono">Dados da empresa</div>
             <dl class="about__facts">
@@ -940,7 +951,7 @@ Problema: (a avaliar)</pre>
               </div>
             </dl>
           </div>
-          <div class="blueprint about__panel">
+          <div class="blueprint about__panel" data-reveal>
             <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
             <div class="about__panel-label mono">O que a COMIFER atende</div>
             <div class="about__tags">
@@ -968,25 +979,25 @@ Problema: (a avaliar)</pre>
   <footer class="site-footer band-dark" id="contato">
     <div class="wrap">
       <div class="footer-grid">
-        <div class="footer-block">
+        <div class="footer-block" data-reveal>
           <div class="footer-block__label mono">Endereço</div>
           <address><a href="https://maps.app.goo.gl/5gCH8F3hvtvz6WBE8" target="_blank" rel="noopener">Av. Rodrigues do
               Prado, 150<br>Ermelinda — Belo Horizonte/MG<br>CEP 31250-310</a></address>
           <a href="https://maps.app.goo.gl/5gCH8F3hvtvz6WBE8" target="_blank" rel="noopener"
             class="footer-block__link mono">Ver no Google Maps →</a>
         </div>
-        <div class="footer-block">
+        <div class="footer-block" data-reveal>
           <div class="footer-block__label mono">Telefone e WhatsApp</div>
           <p class="footer-phone"><a href="tel:+5531984171256">(31) 9 8417-1256</a></p>
           <a class="btn btn-primary" href="https://wa.me/553184171256?text=Ol%C3%A1%2C%20COMIFER%20." target="_blank"
             rel="noopener">Abrir conversa no WhatsApp</a>
         </div>
-        <div class="footer-block">
+        <div class="footer-block" data-reveal>
           <div class="footer-block__label mono">E-mail</div>
           <p class="footer-email"><a href="mailto:contato@comifer.com.br">contato@comifer.com.br</a><br><a
               href="mailto:comifer@terra.com.br">comifer@terra.com.br</a></p>
         </div>
-        <div class="footer-block">
+        <div class="footer-block" data-reveal>
           <div class="footer-block__label mono">Horário</div>
           <div class="hours-badge">
             <span class="hours-badge__dot" aria-hidden="true"></span>
@@ -995,7 +1006,7 @@ Problema: (a avaliar)</pre>
           <p class="footer-block__hours-detail">Seg–Sex: 08:00–12:00 e 13:30–18:00<br>Sáb, Dom e feriados: fechado</p>
         </div>
       </div>
-      <div class="footer-bottom">
+      <div class="footer-bottom" data-reveal>
         <img src="img/Logo/COMIFER - Fonte Branca.png" width="856" height="751" alt="COMIFER">
         <div class="footer-legal">COMIFER — COMERCIAL MINEIRA DE FERRAMENTAS LTDA (ASSTEC)<br>CNPJ 11.480.248/0001-13 ·
           BELO HORIZONTE/MG · DESDE 2010</div>
@@ -1010,6 +1021,7 @@ Problema: (a avaliar)</pre>
     <a class="btn btn-secondary" href="tel:+5531984171256">Ligar</a>
   </div>
 
+  <script src="js/anime.min.js" defer></script>
   <script src="js/redesign.js" defer></script>
 </body>
 

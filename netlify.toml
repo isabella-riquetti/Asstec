@@ -1,12 +1,62 @@
 # Security headers apply everywhere. Cache-Control here is the safe default:
 # HTML (and anything not overridden below) must revalidate, so content and SEO
 # changes go live immediately instead of sitting stale in the CDN for a month.
+#
+# No no-store anywhere on purpose: the whole site is public, static and
+# anonymous -- no login, no forms, no personal data in any response. no-store
+# would only forbid the browser from reusing bytes it is welcome to reuse.
+# If a private page is ever added (an area behind login, an order status),
+# give that path its own block:
+#
+#   [[headers]]
+#     for = "/area-restrita/*"
+#     [headers.values]
+#       Cache-Control = "no-store, max-age=0"
+#
+# Content-Security-Policy notes, directive by directive:
+#   default-src 'self'    everything not listed below may only come from
+#                         comifer.com.br.
+#   script-src            the two sha256 values are the two inline <script>
+#                         blocks in index.html: the gtag config and the
+#                         reveal-on-scroll flag in the <head>. EDITING EITHER
+#                         BLOCK -- even the indentation -- INVALIDATES ITS HASH
+#                         AND THE BROWSER SILENTLY STOPS RUNNING IT. Recompute
+#                         with `node tools/csp-hashes.mjs` and paste the output
+#                         here. googletagmanager.com serves gtag.js.
+#                         No 'unsafe-inline' and no 'unsafe-eval': injected
+#                         <script> tags simply do not execute, which is the
+#                         whole point of the header.
+#   style-src             fonts.googleapis.com serves the Barlow stylesheet.
+#                         No 'unsafe-inline', so style="" attributes in the
+#                         HTML are blocked too -- that is why the rating stars
+#                         and the small mono captions use .stars--47 and
+#                         .mono--xs in css/redesign.css instead. Animating via
+#                         element.style in JS (anime.js, js/redesign.js) is
+#                         CSSOM, not an inline style, and keeps working.
+#   font-src              fonts.gstatic.com serves the Barlow files.
+#   img/connect-src       where GA4 sends its hits.
+#   frame-ancestors       same rule as X-Frame-Options below, for browsers
+#                         that honour CSP instead of the legacy header.
+#   base-uri/object-src   kill <base href> hijacking and plugin embeds.
+#
+# The <script type="application/ld+json"> blocks need no hash: a data block is
+# never executed, so CSP does not check it.
+#
+# To try a change without risking a broken page, ship it as
+# Content-Security-Policy-Report-Only first -- the browser console reports what
+# WOULD have been blocked (and prints the hash it expected) while the current
+# enforcing header stays in place. Keep both headers only while testing.
 [[headers]]
   for = "/*"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
+    Content-Security-Policy = "default-src 'self'; base-uri 'none'; object-src 'none'; frame-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'sha256-HyxMnL08XaeCfgD1kiOiRo+ypAz79tSQ2TphLhTZcFo=' 'sha256-S+K5BE3Dsfz7jf/b26IZB6NMiiIeLgdeQ/snsZLFhTw=' https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://www.googletagmanager.com https://*.google-analytics.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com"
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
+    # Legacy header for the browsers that still ship the XSS auditor. Chrome,
+    # Edge and Safari removed theirs years ago and ignore this line; Firefox
+    # never had one. CSP above is what actually stops injected script today.
+    X-XSS-Protection = "1; mode=block"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(), microphone=(), camera=()"
 
