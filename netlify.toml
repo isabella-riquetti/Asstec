@@ -33,8 +33,17 @@
 #                         element.style in JS (anime.js, js/redesign.js) is
 #                         CSSOM, not an inline style, and keeps working.
 #   font-src              fonts.gstatic.com serves the Barlow files.
-#   img/connect-src       'self' only. Analytics was removed from the site,
-#                         so nothing beacons out to a third party any more.
+#   img/connect-src       'self' only, and it stays that way. The site runs
+#                         Netlify Web Analytics, which is read server-side
+#                         from the CDN request logs -- no script tag, no
+#                         beacon, no cookie, so there is nothing to allow
+#                         here and no LGPD consent banner to show. Enable or
+#                         cancel it in the Netlify UI under Logs & Metrics >
+#                         Analytics; the repo needs no change either way.
+#                         Before swapping in a client-side tracker (GA4,
+#                         Plausible, Cloudflare), note the cost: entries in
+#                         script-src AND connect-src, plus every visitor
+#                         running an adblocker goes uncounted.
 #   frame-ancestors       same rule as X-Frame-Options below, for browsers
 #                         that honour CSP instead of the legacy header.
 #   base-uri/object-src   kill <base href> hijacking and plugin embeds.
