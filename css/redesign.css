@@ -318,7 +318,7 @@ textarea.input { min-height: 74px; resize: vertical; }
 
 /* — footer / contact — */
 .site-footer { padding: 48px 0 40px; border-top: 1px solid rgba(242, 242, 243, .18); }
-.footer-grid { display: grid; grid-template-columns: 1.1fr 1fr 1fr .9fr; gap: 36px; }
+.footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 36px; }
 .footer-block__label { font-size: 10px; color: var(--color-accent-300); }
 .footer-block address { font-style: normal; font-size: 18px; line-height: 1.4; margin: 10px 0 8px; font-family: var(--font-heading); font-weight: 600; }
 .footer-block address a { color: inherit; text-decoration: none; }
